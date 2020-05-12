@@ -17,10 +17,11 @@ echo $PWD
 echo "Start building core components."
 
 if [ "x$1" == "x--release" ]; then
-#    make
-#    rm -rf ../example/bin && cp -rf bin/ ../example/bin/ && cd ../example/server
+    make
+    rm -rf ../example/bin && cp -rf bin/ ../example/bin/ && cd ../example/server
 
     echo "Build artifacts in release mode, with optimizations."
+    cd example/server
     cargo run --release
     exit
 fi

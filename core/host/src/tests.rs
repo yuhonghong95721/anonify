@@ -419,7 +419,6 @@ fn test_integration_eth_transfer_from() {
     let owner = my_access_right.user_address();
     let recipient = third_access_right.user_address();
     let transferred_from_state = transfer_from { owner, recipient, amount };
-    let t0 = std::time::SystemTime::now();
     let receipt = dispatcher.state_transition(
         other_access_right.clone(),
         transferred_from_state,
@@ -431,7 +430,6 @@ fn test_integration_eth_transfer_from() {
         ANONYMOUS_ASSET_ABI_PATH,
     ).unwrap();
     println!("receipt: {}", receipt);
-    println!("t0: {:?}", t0);
 
     // Update state inside enclave
     dispatcher.block_on_event(&contract_addr, ANONYMOUS_ASSET_ABI_PATH).unwrap();
@@ -506,6 +504,7 @@ fn test_integration_eth_mint() {
     let amount = U64::from_raw(50);
     let recipient = other_access_right.user_address();
     let minting_state = mint{ amount, recipient };
+    let t0 = std::time::SystemTime::now();
     let receipt = dispatcher.state_transition(
         my_access_right.clone(),
         minting_state,
@@ -518,6 +517,7 @@ fn test_integration_eth_mint() {
     ).unwrap();
 
     println!("minted state receipt: {}", receipt);
+    println!("t0: {:?}", t0);
 
 
     // Update state inside enclave

@@ -108,6 +108,7 @@ pub fn handle_transfer<D, S, W, DB>(
     let recipient = req.target;
     let transfer_state = transfer{ amount, recipient };
 
+    let t2 = std::time::SystemTime::now();
     let receipt = server.dispatcher.state_transition(
         access_right,
         transfer_state,
@@ -118,6 +119,7 @@ pub fn handle_transfer<D, S, W, DB>(
         &req.contract_addr,
         &server.abi_path,
     )?;
+    println!("t2: {:?}", t2);
 
     Ok(HttpResponse::Ok().json(api::transfer::post::Response(receipt)))
 }

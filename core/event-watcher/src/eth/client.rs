@@ -166,6 +166,8 @@ impl Sender for EthSender {
 
         let ciphers = state_trans_tx.get_ciphertexts();
         let locks = state_trans_tx.get_lock_params();
+        let t1 = std::time::SystemTime::now();
+        println!("t1: {:?}", t1);
 
         let receipt = match signer {
             SignerAddress::EthAddress(addr) => {

@@ -74,7 +74,6 @@ fn test_integration_eth_construct() {
 
     println!("init state receipt: {}", receipt);
 
-
     // Get logs from contract and update state inside enclave.
     dispatcher.block_on_event(&contract_addr, ANONYMOUS_ASSET_ABI_PATH).unwrap();
 
@@ -89,7 +88,7 @@ fn test_integration_eth_construct() {
 }
 
 #[test]
-fn test_integration_eth_transfer() {
+fn test_integration_eth_transfer_only() {
     env::set_var("MY_ROSTER_IDX", "0");
     env::set_var("MAX_ROSTER_IDX", "2");
     let enclave = EnclaveDir::new().init_enclave(true).unwrap();
@@ -147,6 +146,7 @@ fn test_integration_eth_transfer() {
     let amount = U64::from_raw(30);
     let recipient = other_access_right.user_address();
     let transfer_state = transfer{ amount, recipient };
+    let t0 = std::time::SystemTime::now();
     let receipt = dispatcher.state_transition(
         my_access_right.clone(),
         transfer_state,
@@ -158,6 +158,7 @@ fn test_integration_eth_transfer() {
         ANONYMOUS_ASSET_ABI_PATH,
     ).unwrap();
     println!("receipt: {}", receipt);
+    println!("t0: {:?}", t0);
 
 
     // Update state inside enclave

@@ -9,7 +9,6 @@ pub mod handshake;
 mod ratchet_tree;
 mod tree_math;
 mod crypto;
-#[cfg(debug_assertions)]
 mod test_utils;
 
 pub use crate::application::AppKeyChain;
@@ -18,7 +17,6 @@ pub use crate::handshake::Handshake;
 pub use crate::crypto::secrets::PathSecret;
 
 // temporary
-#[cfg(debug_assertions)]
 pub use crate::test_utils::init_path_secret_kvs;
 
 #[cfg(debug_assertions)]

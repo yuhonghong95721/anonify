@@ -8,10 +8,9 @@ use anonify_common::{LockParam, kvs::{MemoryDB, DBValue}, UserAddress};
 use anonify_app_preluder::{mem_name_to_id, Ciphertext};
 use anonify_runtime::{State, StateGetter, StateType, MemId};
 use anonify_treekem::{
-    handshake::{PathSecretRequest, PathSecretKVS}
+    handshake::{PathSecretRequest, PathSecretKVS},
+    init_path_secret_kvs,
 };
-#[cfg(debug_assertions)]
-use anonify_treekem::init_path_secret_kvs;
 use crate::{
     crypto::EnclaveIdentityKey,
     group_key::GroupKey,
@@ -70,7 +69,7 @@ impl EnclaveContext<StateType> {
         let mut kvs = PathSecretKVS::new();
         init_path_secret_kvs(&mut kvs, UNTIL_ROSTER_IDX, UNTIL_EPOCH);
         let req = PathSecretRequest::Local(kvs);
-        
+
         let my_roster_idx: usize = env::var("MY_ROSTER_IDX")
             .expect("MY_ROSTER_IDX is not set")
             .parse()
@@ -82,7 +81,7 @@ impl EnclaveContext<StateType> {
 
         let group_key = Arc::new(SgxRwLock::new(GroupKey::new(my_roster_idx, max_roster_idx, req)?));
 
-        Ok(EnclaveContext{
+        Ok(EnclaveContext {
             spid,
             identity_key,
             db,
@@ -125,7 +124,7 @@ impl EnclaveContext<StateType> {
                 self.db
                     .insert(user_state.address(), user_state.mem_id(), user_state.into_sv());
             }
-            None => { }
+            None => {}
         }
 
         Ok(())

@@ -199,8 +199,10 @@ fn test_key_rotation() {
     dispatcher.block_on_event(&contract_addr, ANONYMOUS_ASSET_ABI_PATH).unwrap();
 
     // Send handshake
+    let t0 = std::time::SystemTime::now();
     let receipt = dispatcher.handshake(deployer_addr.clone(), gas, &contract_addr, ANONYMOUS_ASSET_ABI_PATH).unwrap();
     println!("handshake receipt: {}", receipt);
+    println!("t0: {:?}", t0);
 
     // Get handshake from contract
     dispatcher.block_on_event(&contract_addr, ANONYMOUS_ASSET_ABI_PATH).unwrap();
@@ -600,7 +602,6 @@ fn test_integration_eth_burn() {
     // Send a transaction to contract
     let amount = U64::from_raw(20);
     let burn_state = burn{ amount };
-    let t0 = std::time::SystemTime::now();
     let receipt = dispatcher.state_transition(
         other_access_right.clone(),
         burn_state,
@@ -612,7 +613,6 @@ fn test_integration_eth_burn() {
         ANONYMOUS_ASSET_ABI_PATH,
     ).unwrap();
     println!("receipt: {}", receipt);
-    println!("t0: {:?}", t0);
 
 
     // Update state inside enclave

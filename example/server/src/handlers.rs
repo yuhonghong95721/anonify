@@ -49,6 +49,7 @@ pub fn handle_register<D, S, W, DB>(
         W: Watcher<WatcherDB=DB>,
         DB: BlockNumDB,
 {
+    let t0 = std::time::SystemTime::now();
     let signer = server.dispatcher.get_account(0)?;
     let receipt = server.dispatcher.register(
         signer,
@@ -56,6 +57,7 @@ pub fn handle_register<D, S, W, DB>(
         &req.contract_addr,
         &server.abi_path,
     )?;
+    println!("t0: {:?}", t0);
 
     Ok(HttpResponse::Ok().json(api::register::post::Response(receipt)))
 }

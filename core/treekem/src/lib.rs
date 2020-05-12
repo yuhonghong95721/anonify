@@ -18,6 +18,7 @@ pub use crate::handshake::Handshake;
 pub use crate::crypto::secrets::PathSecret;
 
 // temporary
+#[cfg(debug_assertions)]
 pub use crate::test_utils::init_path_secret_kvs;
 
 #[cfg(debug_assertions)]

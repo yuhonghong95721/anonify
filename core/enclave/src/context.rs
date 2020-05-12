@@ -8,9 +8,10 @@ use anonify_common::{LockParam, kvs::{MemoryDB, DBValue}, UserAddress};
 use anonify_app_preluder::{mem_name_to_id, Ciphertext};
 use anonify_runtime::{State, StateGetter, StateType, MemId};
 use anonify_treekem::{
-    handshake::{PathSecretRequest, PathSecretKVS},
-    init_path_secret_kvs,
+    handshake::{PathSecretRequest, PathSecretKVS}
 };
+#[cfg(debug_assertions)]
+use anonify_treekem::init_path_secret_kvs;
 use crate::{
     crypto::EnclaveIdentityKey,
     group_key::GroupKey,

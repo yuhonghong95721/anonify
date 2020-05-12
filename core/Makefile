@@ -140,7 +140,7 @@ $(Enclave_EDL_Files): $(SGX_EDGER8R) enclave/Enclave.edl
 ######## Host Objects ########
 
 host/Enclave_u.o: $(Enclave_EDL_Files)
-	@cd host && $(CARGO) build -p anonify-types --release
+	@cd host && $(CARGO) build -p anonify-types
 	@$(CC) $(Host_C_Flags) -c host/Enclave_u.c -o $@
 	@echo "CC   <=  $<"
 

@@ -193,8 +193,6 @@ impl Sender for EthSender {
         F: FnOnce(sgx_enclave_id_t) -> Result<RawHandshakeTx>
     {
         let handshake_tx: BoxedHandshakeTx = handshake_fn(self.enclave_id)?.into();
-        let t1 = std::time::SystemTime::now();
-        println!("t1: {:?}", t1);
         let receipt = match signer {
             SignerAddress::EthAddress(addr) => {
                 self.contract.handshake(

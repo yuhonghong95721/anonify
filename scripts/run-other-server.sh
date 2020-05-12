@@ -21,7 +21,6 @@ if [ "x$1" == "x--release" ]; then
     rm -rf ../example/bin && cp -rf bin/ ../example/bin/ && cd ../example/server
 
     echo "Build artifacts in release mode, with optimizations."
-    cd ../example/server
     cargo run --release
     exit
 fi

@@ -49,8 +49,8 @@ pub fn handle_register<D, S, W, DB>(
         W: Watcher<WatcherDB=DB>,
         DB: BlockNumDB,
 {
-    let t0 = std::time::SystemTime::now();
     let signer = server.dispatcher.get_account(0)?;
+    let t0 = std::time::SystemTime::now();
     let receipt = server.dispatcher.register(
         signer,
         DEFAULT_SEND_GAS,

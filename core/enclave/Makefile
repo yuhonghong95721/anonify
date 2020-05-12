@@ -43,12 +43,12 @@ ifeq ($(XARGO_SGX), 1)
 	RUST_TARGET_PATH=$(Rust_Target_Path) xargo build --target x86_64-unknown-linux-sgx --release
 	cp ./target/x86_64-unknown-linux-sgx/$(Rust_target_dir)/libanonifyenclave.a ../lib/libenclave.a
 else
-	$(CARGO) build $(CARGO_FLAGS)
+	$(CARGO) build $(CARGO_FLAGS) --release
 	cp ./target/$(Rust_target_dir)/libanonifyenclave.a ../lib/libenclave.a
 endif
 
 .PHONY: bindgen
 bindgen: Enclave_t.h
-	$(CARGO) build -p anonify-types
+	$(CARGO) build -p anonify-types --release
 	$(BINDGEN) Enclave_t.h $(BINDGEN_FLAGS) -- $(BINDGEN_CLANG_FLAGS) > $(BINDGEN_OUTPUT_FILE)
 	$(RUSTFMT)  $(BINDGEN_OUTPUT_FILE)

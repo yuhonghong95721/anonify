@@ -140,7 +140,7 @@ $(Enclave_EDL_Files): $(SGX_EDGER8R) enclave/Enclave.edl
 ######## Host Objects ########
 
 host/Enclave_u.o: $(Enclave_EDL_Files)
-	@cd host && $(CARGO) build -p anonify-types
+	@cd host && $(CARGO) build -p anonify-types --release
 	@$(CC) $(Host_C_Flags) -c host/Enclave_u.c -o $@
 	@echo "CC   <=  $<"
 
@@ -150,7 +150,7 @@ $(Host_Enclave_u_Object): host/Enclave_u.o
 	cp $(Host_Enclave_u_Object) $(CUSTOM_LIBRARY_PATH)
 
 $(Host_Name): $(Host_Enclave_u_Object) $(Host_SRC_Files)
-	@cd host && SGX_SDK_RUST=$(SGX_SDK_RUST) SGX_SDK=$(SGX_SDK) $(CARGO) build $(Host_Rust_Flags)
+	@cd host && SGX_SDK_RUST=$(SGX_SDK_RUST) SGX_SDK=$(SGX_SDK) $(CARGO) build $(Host_Rust_Flags) --release
 	@echo "Cargo  =>  $@"
 	mkdir -p $(CUSTOM_BIN_PATH)
 

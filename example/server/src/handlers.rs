@@ -50,8 +50,9 @@ pub fn handle_register<D, S, W, DB>(
         DB: BlockNumDB,
 {
     let signer = server.dispatcher.get_account(0)?;
+    let dispatcher = &server.dispatcher;
     let t0 = std::time::SystemTime::now();
-    let receipt = server.dispatcher.register(
+    let receipt = dispatcher.register(
         signer,
         DEFAULT_SEND_GAS,
         &req.contract_addr,

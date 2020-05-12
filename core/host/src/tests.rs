@@ -88,7 +88,7 @@ fn test_integration_eth_construct() {
 }
 
 #[test]
-fn test_integration_eth_transfer_only() {
+fn test_integration_eth_transfer() {
     env::set_var("MY_ROSTER_IDX", "0");
     env::set_var("MAX_ROSTER_IDX", "2");
     let enclave = EnclaveDir::new().init_enclave(true).unwrap();
@@ -146,7 +146,6 @@ fn test_integration_eth_transfer_only() {
     let amount = U64::from_raw(30);
     let recipient = other_access_right.user_address();
     let transfer_state = transfer{ amount, recipient };
-    let t0 = std::time::SystemTime::now();
     let receipt = dispatcher.state_transition(
         my_access_right.clone(),
         transfer_state,
@@ -158,7 +157,6 @@ fn test_integration_eth_transfer_only() {
         ANONYMOUS_ASSET_ABI_PATH,
     ).unwrap();
     println!("receipt: {}", receipt);
-    println!("t0: {:?}", t0);
 
 
     // Update state inside enclave
@@ -288,6 +286,7 @@ fn test_integration_eth_approve() {
     let amount = U64::from_raw(30);
     let spender = other_access_right.user_address();
     let approve_state = approve { amount, spender };
+    let t0 = std::time::SystemTime::now();
     let receipt = dispatcher.state_transition(
         my_access_right.clone(),
         approve_state,
@@ -299,7 +298,7 @@ fn test_integration_eth_approve() {
         ANONYMOUS_ASSET_ABI_PATH,
     ).unwrap();
     println!("receipt: {}", receipt);
-
+    println!("t0: {:?}", t0);
 
     // Update state inside enclave
     dispatcher.block_on_event(&contract_addr, ANONYMOUS_ASSET_ABI_PATH).unwrap();

@@ -504,7 +504,6 @@ fn test_integration_eth_mint() {
     let amount = U64::from_raw(50);
     let recipient = other_access_right.user_address();
     let minting_state = mint{ amount, recipient };
-    let t0 = std::time::SystemTime::now();
     let receipt = dispatcher.state_transition(
         my_access_right.clone(),
         minting_state,
@@ -517,7 +516,6 @@ fn test_integration_eth_mint() {
     ).unwrap();
 
     println!("minted state receipt: {}", receipt);
-    println!("t0: {:?}", t0);
 
 
     // Update state inside enclave
@@ -602,6 +600,7 @@ fn test_integration_eth_burn() {
     // Send a transaction to contract
     let amount = U64::from_raw(20);
     let burn_state = burn{ amount };
+    let t0 = std::time::SystemTime::now();
     let receipt = dispatcher.state_transition(
         other_access_right.clone(),
         burn_state,
@@ -613,6 +612,7 @@ fn test_integration_eth_burn() {
         ANONYMOUS_ASSET_ABI_PATH,
     ).unwrap();
     println!("receipt: {}", receipt);
+    println!("t0: {:?}", t0);
 
 
     // Update state inside enclave

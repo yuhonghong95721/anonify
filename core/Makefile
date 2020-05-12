@@ -150,7 +150,7 @@ $(Host_Enclave_u_Object): host/Enclave_u.o
 	cp $(Host_Enclave_u_Object) $(CUSTOM_LIBRARY_PATH)
 
 $(Host_Name): $(Host_Enclave_u_Object) $(Host_SRC_Files)
-	@cd host && SGX_SDK_RUST=$(SGX_SDK_RUST) SGX_SDK=$(SGX_SDK) $(CARGO) build $(Host_Rust_Flags) --release
+	@cd host && SGX_SDK_RUST=$(SGX_SDK_RUST) SGX_SDK=$(SGX_SDK) $(CARGO) build $(Host_Rust_Flags)
 	@echo "Cargo  =>  $@"
 	mkdir -p $(CUSTOM_BIN_PATH)
 
